@@ -16,15 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from rest_framework.routers import SimpleRouter
 
-# from machine.views import CashMachineAPIView
-#
-# router = SimpleRouter()
-# router.register('cash_machine', CashMachineAPIView)
+from machine.views import CashMachineView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('cash_machine', CashMachineView.as_view(), name='items-endpoint'),
 
-# urlpatterns += router.urls
+]
