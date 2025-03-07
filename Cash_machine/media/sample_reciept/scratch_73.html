@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <title>Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: none;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-mono p-4">
+    <div class="max-w-xs mx-auto">
+        <p class="text-center">ООО "КОМПАНИЯ К"</p>
+        <p class="text-center">Добро пожаловать</p>
+        <p class="text-center">ККМ 00075411 #3969</p>
+        <p class="text-center">ИНН 1087746942040</p>
+        <p class="text-center">ЭКЛЗ 3851495566</p>
+        <p class="text-center">Дата: {{ date }}</p>
+
+        <h3 class="text-center">Товары:</h3>
+        <table>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>={{ item.total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="text-center">Итог: {{ total_cost }}</p>
+        <p class="text-center">*********************************</p>
+    </div>
+</body>
+</html>

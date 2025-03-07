@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'Cash_machine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cash_machine',
+        'NAME': 'cash_machine_db',
         'USER': 'postgres',
         'PASSWORD': 'rtf558Ur',
         'HOST': '127.0.0.1',
