@@ -28,21 +28,21 @@ def createreciept(items):
         'page-width': "69"})
     return filename
 
-def send_file(request, filename):
-        filename = filename
-        file_directory = 'media/'  # Замените на путь к вашей директории с файлами
-        file_path = os.path.join(file_directory, filename)
-        img = qrcode.make(f'http://127.0.0.1:8000/media/{filename}')
-        img.save("some_file.png")
-        # Проверка, существует ли файл
-        if os.path.exists(file_path):
-            with open(file_path, 'rb') as f:
-                response = HttpResponse(f.read(), content_type='application/pdf')
-                response['Content-Disposition'] = f'attachment; filename="{filename}"'
-                return response
-        else:
-            raise Http404("Файл не найден")
 
+def send_file(request, filename):
+    filename = filename
+    file_directory = 'media/'  # Замените на путь к вашей директории с файлами
+    file_path = os.path.join(file_directory, filename)
+    img = qrcode.make(f'http://192.168.0.103:8000/media/{filename}')
+    img.save("media/QR-code/qr_code.png")
+    # Проверка, существует ли файл
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as f:
+            response = HttpResponse(f.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+    else:
+        raise Http404("Файл не найден")
 
 
 class CashMachineView(APIView):
@@ -52,5 +52,6 @@ class CashMachineView(APIView):
         if serializer.is_valid():
             items = serializer.validated_data['items']
             createreciept(items)
-            return Response({"items": items}, status=status.HTTP_201_CREATED)
+            image_data = open('media/QR-code/qr_code.png', 'rb').read()
+            return HttpResponse(image_data, content_type='image/png')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
