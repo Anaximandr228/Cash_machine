@@ -2,21 +2,20 @@ import os
 import uuid
 from datetime import datetime
 import pdfkit
-import qrcode as qrcode
 from django.http import HttpResponse, Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from jinja2 import Environment, FileSystemLoader
+from machine.create_qr import generate_qr
 from machine.models import Item
 from machine.serializers import ItemsSerializer
-from PIL import Image, ImageDraw
 
 
-def createreciept(items):
+def create_reciept(items):
     items_list = list(Item.objects.filter(id__in=items))
     env = Environment(loader=FileSystemLoader('media/sample_reciept'))
-    template = env.get_template("scratch_73.html")
+    template = env.get_template("receipt_temoplate.html")
     items = [{'name': item.title, 'total': item.price, 'quantity': 1} for item in items_list]
     total_price = sum(item['total'] for item in items)
     scratch_73 = template.render(
@@ -26,6 +25,7 @@ def createreciept(items):
     pdfkit.from_string(scratch_73, f'{filename}', configuration=config, options={
         'page-height': "150",
         'page-width': "69"})
+    generate_qr(filename)
     return filename
 
 
@@ -33,8 +33,6 @@ def send_file(request, filename):
     filename = filename
     file_directory = 'media/'  # Замените на путь к вашей директории с файлами
     file_path = os.path.join(file_directory, filename)
-    img = qrcode.make(f'http://192.168.0.103:8000/media/{filename}')
-    img.save("media/QR-code/qr_code.png")
     # Проверка, существует ли файл
     if os.path.exists(file_path):
         with open(file_path, 'rb') as f:
@@ -51,7 +49,7 @@ class CashMachineView(APIView):
         serializer = ItemsSerializer(data=request.data)
         if serializer.is_valid():
             items = serializer.validated_data['items']
-            createreciept(items)
+            create_reciept(items)
             image_data = open('media/QR-code/qr_code.png', 'rb').read()
             return HttpResponse(image_data, content_type='image/png')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
