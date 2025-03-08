@@ -2,7 +2,10 @@ import uuid
 from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 import pdfkit
+
+from Cash_machine.settings import WKHTMLTOPDF_PATH
 from machine.models import Item
+
 from machine.create_qr import generate_qr
 
 
@@ -15,10 +18,9 @@ def create_reciept(items):
     sample_reciept = template.render(
         {'date': datetime.now().strftime("%d.%m.%Y %H:%M"), 'items': items, 'total_cost': total_price})
     filename = f'media/{uuid.uuid4()}.pdf'
-    config = pdfkit.configuration(wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
+    config = pdfkit.configuration(wkhtmltopdf=f"{WKHTMLTOPDF_PATH}")
     pdfkit.from_string(sample_reciept, f'{filename}', configuration=config, options={
         'page-height': "150",
         'page-width': "69"})
     generate_qr(filename)
     return filename
-

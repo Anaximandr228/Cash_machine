@@ -127,4 +127,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-BASE_URL = 'http://192.168.0.103:8000/'
+BASE_URL = 'http://192.168.0.103:8000/' #
+
+WKHTMLTOPDF_PATH ='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe' # Путь к директории wkhtmltopdf

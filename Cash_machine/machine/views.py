@@ -21,9 +21,8 @@ class CashMachineView(APIView):
 
 def send_file(request, filename):
     url_file = filename
-    file_directory = 'media/'  # Замените на путь к вашей директории с файлами
+    file_directory = 'media/'
     file_path = os.path.join(file_directory, url_file)
-    # Проверка, существует ли файл
     if os.path.exists(file_path):
         with open(file_path, 'rb') as f:
             response = HttpResponse(f.read(), content_type='application/pdf')
