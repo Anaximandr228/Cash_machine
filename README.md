@@ -3,7 +3,8 @@
 ## Установка
 Создать новое окружение `python -m venv venv`<br>
 Создать базу данных PostgreSQL<br>
-В файле "settings.py" внести характеристики подключения к своей базе данных PostgreSQL
+В файле "settings.py" внести характеристики подключения к своей базе данных PostgreSQL<br>
+В файле "settings.py" внести данные в переменные BASE_URL и WKHTMLTOPDF_PATH
 
 
 ### Для Windows:
