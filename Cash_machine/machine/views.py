@@ -6,7 +6,7 @@ from rest_framework import status
 from machine.receipt import create_reciept
 from machine.serializers import ItemsSerializer
 
-
+# Отправка qr-кода
 class CashMachineView(APIView):
 
     def post(self, request):
@@ -18,7 +18,7 @@ class CashMachineView(APIView):
             return HttpResponse(image_data, content_type='image/png')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# Отправка чека
 def send_file(request, filename):
     url_file = filename
     file_directory = 'media/'

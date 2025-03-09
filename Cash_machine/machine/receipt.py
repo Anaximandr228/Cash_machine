@@ -9,6 +9,7 @@ from machine.models import Item
 from machine.create_qr import generate_qr
 
 
+# Функция создания чека
 def create_reciept(items):
     items_list = list(Item.objects.filter(id__in=items))
     env = Environment(loader=FileSystemLoader('media/sample_reciept'))
