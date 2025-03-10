@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'Cash_machine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cash_machine_db',
-        'USER': 'postgres',
-        'PASSWORD': 'rtf558Ur',
+        'NAME': '', # Название базы данных PostgeSQL
+        'USER': '', # Имя пользователь PostgreSQL
+        'PASSWORD': '', # Пароль пользователя PostgreSQL
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -127,6 +127,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-BASE_URL = 'http://192.168.0.103:8000/' # IP-адрес вашей локальной машины
+BASE_URL = '' # IP-адрес вашей локальной машины
 
-WKHTMLTOPDF_PATH ='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe' # Путь к директории wkhtmltopdf
+WKHTMLTOPDF_PATH ='' # Путь к директории wkhtmltopdf
